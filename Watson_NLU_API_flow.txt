@@ -1,0 +1,106 @@
+[
+    {
+        "id": "5b3948bb.466828",
+        "type": "http in",
+        "z": "fad033e5.79eed",
+        "name": "Natural Language Understanding",
+        "url": "/language",
+        "method": "post",
+        "swaggerDoc": "",
+        "x": 161,
+        "y": 333,
+        "wires": [
+            [
+                "d772ed77.91bab"
+            ]
+        ]
+    },
+    {
+        "id": "78f0f376.27b04c",
+        "type": "http response",
+        "z": "fad033e5.79eed",
+        "name": "",
+        "x": 956,
+        "y": 386,
+        "wires": []
+    },
+    {
+        "id": "4bec2e13.677e4",
+        "type": "debug",
+        "z": "fad033e5.79eed",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "features",
+        "x": 779,
+        "y": 295,
+        "wires": []
+    },
+    {
+        "id": "d772ed77.91bab",
+        "type": "function",
+        "z": "fad033e5.79eed",
+        "name": "Get Text",
+        "func": "msg.payload = msg.req.body.txt;\nmsg.srclang = 'en';\nmsg.destlang = msg.req.body.lang;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390.00000762939453,
+        "y": 334.00000953674316,
+        "wires": [
+            [
+                "f95e12aa.42f8f"
+            ]
+        ]
+    },
+    {
+        "id": "f95e12aa.42f8f",
+        "type": "natural-language-understanding",
+        "z": "fad033e5.79eed",
+        "name": "false",
+        "categories": false,
+        "concepts": true,
+        "maxconcepts": "8",
+        "doc-emotion": true,
+        "doc-emotion-target": "",
+        "doc-sentiment": true,
+        "doc-sentiment-target": "",
+        "entity": true,
+        "entity-emotion": false,
+        "entity-sentiment": false,
+        "maxentities": "50",
+        "keyword": true,
+        "keyword-emotion": false,
+        "keyword-sentiment": false,
+        "maxkeywords": "5",
+        "metadata": false,
+        "relation": false,
+        "semantic": false,
+        "semantic-entities": false,
+        "semantic-keywords": false,
+        "maxsemantics": "50",
+        "x": 543,
+        "y": 335,
+        "wires": [
+            [
+                "4bec2e13.677e4",
+                "33c19272.67319e"
+            ]
+        ]
+    },
+    {
+        "id": "33c19272.67319e",
+        "type": "function",
+        "z": "fad033e5.79eed",
+        "name": "Output",
+        "func": "msg.payload = msg.features\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 764,
+        "y": 379,
+        "wires": [
+            [
+                "78f0f376.27b04c"
+            ]
+        ]
+    }
+]
